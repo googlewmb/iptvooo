@@ -1,0 +1,267 @@
+# IPTV GitHub source inventory
+# Audit snapshot: 2026-11-11
+# Scope: China Mobile / China Unicom / China Telecom regional IPTV projects.
+# "verified" means repository metadata, latest commit, and README were inspected.
+# It does NOT guarantee that a source is reachable or authorized on every network.
+
+schema_version: 1
+audit_date: "2026-11-11"
+
+regional_sources:
+  - id: liaoning_cmcc_docker
+    province: Liaoning
+    province_zh: 辽宁
+    operator: CMCC
+    operator_zh: 中国移动
+    category: collector_service
+    status: verified
+    repo: https://github.com/xiaotian89/ln-mobile-iptv
+    default_branch: main
+    latest_commit: "2026-10-08T14:27:26Z"
+    capabilities: [YAUTH_capture_web, m3u_service, epg_auto_update, docker]
+    execution: local_lan
+    notes: "YAUTH and set-top-box traffic capture require the user's authorized local IPTV network. README requires YAUTH and a channel config file."
+
+  - id: hubei_ctcc_gateway
+    province: Hubei
+    province_zh: 湖北
+    operator: CTCC
+    operator_zh: 中国电信
+    category: portal_gateway
+    status: verified
+    repo: https://github.com/liuyi888-beep/hubei-telecom-iptv-gateway-opensource
+    default_branch: main
+    latest_commit: "2026-07-19T03:56:04Z"
+    capabilities: [portal_login, channel_refresh, epg, timeshift, catchup, m3u, xmltv]
+    execution: local_lan
+    notes: "Requires the user's authorized IPTV account and regional portal/network parameters."
+
+  - id: guangdong_cmcc_auto
+    province: Guangdong
+    province_zh: 广东
+    operator: CMCC
+    operator_zh: 中国移动
+    category: api_collector
+    status: verified
+    repo: https://github.com/melody0709/cmcc_iptv_auto_py
+    default_branch: main
+    latest_commit: "2026-10-26T08:09:56Z"
+    capabilities: [channel_json, epg, catchup_metadata, grouping, deduplication, stream_check, ffprobe, m3u]
+    execution: local_lan
+    notes: "README says the collector needs access to Guangdong Mobile IPTV network 183.235.0.0/16."
+
+  - id: guangdong_shanghai_multi_operator
+    province: [Guangdong, Shanghai]
+    province_zh: [广东, 上海]
+    operator: [CMCC, CTCC]
+    operator_zh: [中国移动, 中国电信]
+    category: regional_collector_scripts
+    status: verified
+    repo: https://github.com/pcg562240/pcg-iptv
+    default_branch: main
+    latest_commit: "2026-06-20T01:49:11Z"
+    capabilities: [channel_collection, epg, catchup, m3u, xmltv]
+    execution: local_lan
+    notes: "README identifies Guangdong Telecom, Guangdong Mobile, and Shanghai Telecom scripts. Requires operator-network reachability and account/device parameters."
+
+  - id: beijing_cucc_sniffer
+    province: Beijing
+    province_zh: 北京
+    operator: CUCC
+    operator_zh: 中国联通
+    category: sniffer
+    status: verified
+    repo: https://github.com/zzzz0317/beijing-unicom-iptv-playlist-sniffer
+    default_branch: main
+    latest_commit: "2026-10-13T12:57:32Z"
+    license: AGPL-3.0
+    capabilities: [stb_traffic_sniffing, user_token_detection, channel_update, epg]
+    execution: local_lan
+    notes: "Requires authorized mirroring of set-top-box traffic to the capture host; README describes promiscuous mode and systemd services."
+
+  - id: beijing_cucc_playlist
+    province: Beijing
+    province_zh: 北京
+    operator: CUCC
+    operator_zh: 中国联通
+    category: auto_updated_playlist
+    status: verified
+    repo: https://github.com/zzzz0317/beijing-unicom-iptv-playlist
+    default_branch: main
+    latest_commit: "2026-11-10T23:30:11Z"
+    capabilities: [daily_update, multicast_m3u, unicast_m3u, epg, timeshift]
+    execution: github_actions_and_local_proxy
+    notes: "Playlist/data repository paired with the sniffer. README notes that some timeshift services are only reachable inside the IPTV network."
+
+  - id: guangxi_cmcc_api
+    province: Guangxi
+    province_zh: 广西
+    operator: CMCC
+    operator_zh: 中国移动
+    category: api_auto_update
+    status: verified
+    repo: https://github.com/alvspen/gxmobile-iptv
+    default_branch: main
+    latest_commit: "2026-10-27T11:16:57Z"
+    capabilities: [epg_api, json_to_m3u, github_actions_6h, retries, data_validation, tests]
+    execution: github_actions
+    notes: "README documents a six-hour scheduled workflow and a minimum-channel safety threshold."
+
+  - id: zhejiang_ctcc_m3u
+    province: Zhejiang
+    province_zh: 浙江
+    operator: CTCC
+    operator_zh: 中国电信
+    category: playlist_generator
+    status: verified
+    repo: https://github.com/zoope/Zhejiang_Telecom_IPTV_Auto
+    default_branch: main
+    latest_commit: "2026-10-29T15:34:51Z"
+    capabilities: [csv_to_m3u, github_actions, multicast, epg_reference, fcc, catchup_validation]
+    execution: github_actions
+    notes: "Generates M3U from an upstream CSV; it is not a set-top-box credential sniffer."
+
+  - id: guangdong_ctcc_playlist
+    province: Guangdong
+    province_zh: 广东
+    operator: CTCC
+    operator_zh: 中国电信
+    category: auto_updated_playlist
+    status: verified
+    repo: https://github.com/Yauanyyy/Guangdong-ChinaTelecom-IPTV
+    default_branch: main
+    latest_commit: "2026-11-10T21:30:00Z"
+    capabilities: [daily_sync, multicast_to_unicast_m3u]
+    execution: github_actions_or_publication
+    notes: "Playlist contains placeholder LAN proxy addresses; replace with the user's own authorized multicast proxy endpoint."
+
+  - id: beijing_mobile_unicom_lists
+    province: Beijing
+    province_zh: 北京
+    operator: [CMCC, CUCC]
+    operator_zh: [中国移动, 中国联通]
+    category: playlist_repository
+    status: verified
+    repo: https://github.com/qwerttvv/Beijing-IPTV
+    capabilities: [mobile_m3u, mobile_multicast_m3u, unicom_m3u, unicom_multicast_m3u]
+    notes: "Data/list repository; not a regional authentication or sniffing collector."
+
+  - id: tianjin_mobile_unicom_lists
+    province: Tianjin
+    province_zh: 天津
+    operator: [CMCC, CUCC]
+    operator_zh: [中国移动, 中国联通]
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/chilinha/tv
+    capabilities: [mobile_multicast_m3u, unicom_multicast_m3u]
+    notes: "README/file names indicate mobile.m3u and unicom.m3u; latest commit date was not independently revalidated in this audit pass."
+
+  - id: jiangsu_cmcc_list
+    province: Jiangsu
+    province_zh: 江苏
+    operator: CMCC
+    operator_zh: 中国移动
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/cicivi/jsyd-iptv
+    notes: "Regional playlist candidate; recheck recent commit and actual playlist contents before production use."
+
+  - id: anhui_cucc_list
+    province: Anhui
+    province_zh: 安徽
+    operator: CUCC
+    operator_zh: 中国联通
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/qiuhaotc/AnHuiLianTongIPTV
+
+  - id: anhui_cmcc_list
+    province: Anhui
+    province_zh: 安徽
+    operator: CMCC
+    operator_zh: 中国移动
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/jodsyr/ChinaMobile-AnHuiIPTV-list
+
+  - id: henan_cmcc_list
+    province: Henan
+    province_zh: 河南
+    operator: CMCC
+    operator_zh: 中国移动
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/vnsu/HeNanCMCCIPTV
+
+  - id: shandong_multi_operator_lists
+    province: Shandong
+    province_zh: 山东
+    operator: [CMCC, CUCC, CTCC]
+    operator_zh: [中国移动, 中国联通, 中国电信]
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/sumingyd/Telecom-Shandong-IPTV-List
+    notes: "Mixed operator lists in one repository; do not treat as three independent collectors."
+
+  - id: shanxi_cmcc_list
+    province: Shanxi
+    province_zh: 山西
+    operator: CMCC
+    operator_zh: 中国移动
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/web1n/shanxi-china-mobile-iptv
+
+  - id: beijing_ctcc_list
+    province: Beijing
+    province_zh: 北京
+    operator: CTCC
+    operator_zh: 中国电信
+    category: playlist_repository
+    status: needs_commit_recheck
+    repo: https://github.com/microjo/CT-BeijingIPTV-List
+
+generic_tools:
+  - id: guovin_iptv_api
+    category: aggregator_checker
+    status: verified
+    repo: https://github.com/Guovin/iptv-api
+    latest_commit: "2026-10-14T01:21:34Z"
+    capabilities: [multi_source_collection, availability_check, speed_test, filtering, m3u, txt, api]
+    notes: "General public-source pipeline; not a substitute for operator-network authentication."
+
+  - id: bjzhou_iptv_collector
+    category: aggregator_checker
+    status: verified
+    repo: https://github.com/bjzhou/iptv-collector
+    latest_commit: "2026-09-09T09:08:15Z"
+    capabilities: [async_collection, http_check, ffmpeg_check, latency_sort, m3u, txt]
+    notes: "README documents public subscription aggregation and a CM broadband source list."
+
+  - id: cs3306_iptv_sources
+    category: aggregator_checker
+    status: verified
+    repo: https://github.com/cs3306/IPTV-Sources
+    latest_commit: "2026-11-10T19:41:15Z"
+    capabilities: [multi_source_aggregation, ffprobe, freezedetect, backup_sources, region_categories, daily_update]
+
+  - id: iptv_org_epg
+    category: epg
+    status: verified
+    repo: https://github.com/iptv-org/epg
+    capabilities: [xmltv, scheduled_epg_collection]
+    notes: "Generic EPG tooling; regional channel IDs and source availability still need mapping."
+
+  - id: stackia_rtp2httpd
+    category: multicast_gateway
+    status: verified
+    repo: https://github.com/stackia/rtp2httpd
+    capabilities: [udp_rtp_proxy, http, rtsp, hls, fcc]
+    notes: "Gateway/transport component, not a channel collector."
+
+# Production rules:
+# 1. Run operator-network collectors only on a network and account authorized for that service.
+# 2. Keep account IDs, passwords, MAC/STB identifiers, tokens, and capture files out of public Git.
+# 3. GitHub Actions should process/publish data uploaded by the local collector; it cannot sniff a home LAN or directly join private IPTV multicast networks.
+# 4. Do not mark status=verified as proof of playback reachability; run regional connectivity and stream checks locally.
